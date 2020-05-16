@@ -1,15 +1,12 @@
-<template>
-  <div>
-    <!-- <router-link to='/'>login</router-link>
-    <router-view>-->
-  </div>
-</template>
+
 <script>
 import Vue from "vue";
 import Router from "vue-router";
 import login from "@/components/Users/signIn";
 import SignUp from "@/components/Users/signUp";
-import Accounts from "./components/Accounts/accounts"
+import Accounts from "./components/Accounts/accounts";
+import addAccount from "./components/Accounts/addAccount";
+import addTransaction from "./components/Transactions/addTransaction";
 Vue.use(Router);
 export default new Router({
   routes: [
@@ -27,6 +24,16 @@ export default new Router({
       path: "/accounts",
       name: "Accounts",
       component: Accounts
+    },
+    {
+      path: "/addAccount",
+      name: "addAccount",
+      component: addAccount
+    },
+    {
+      path: "/addTransaction",
+      name: "addTransaction",
+      component: addTransaction
     },
 
     {

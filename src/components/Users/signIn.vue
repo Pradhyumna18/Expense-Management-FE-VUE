@@ -3,7 +3,7 @@
     <h1>EXPENSE TRACKER</h1>
     <input type="text" v-model="userName" />
     <input type="password" v-model="password" />
-    <router-link to='/signup'>Don't have account?Register here</router-link>
+    <router-link to="/signup">Don't have account?Register here</router-link>
     <button v-on:click="submit">signin</button>
   </div>
 </template>
@@ -18,8 +18,7 @@ export default {
   data() {
     return {
       userName: "",
-      password: "",
-      token: ""
+      password: ""
     };
   },
   methods: {
@@ -28,10 +27,7 @@ export default {
       res.then(response => {
         if (response) {
           localStorage.setItem("token", JSON.stringify(response));
-          console.log(this.token);
-          this.token = response;
-          this.$router.push('/accounts')
-          console.log(this.token);
+          this.$router.push("/accounts");
         } else alert("signin failed");
       });
     }
