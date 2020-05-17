@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="accountsDiv">
-      <div
-        v-for="account in accounts"
-        v-bind:key="account.id"
-        class="accounts"
-      >
-      <div>{{account.accountName}}</div><div>{{account.accountBalance}}</div></div>
+      <div v-for="account in accounts" v-bind:key="account.id" class="accounts">
+        <div>{{account.accountName}}</div>
+        <div>{{account.accountBalance}}</div>
+      </div>
       <div style="font-size:50px" class="accounts" v-on:click="$router.push('/addAccount')">+</div>
     </div>
     <button v-on:click="$router.push('/addTransaction')" class="addButton">Add transaction</button>
-    <Transactions />
+    <Transactions v-bind:onDelete="onDelete"/>
   </div>
 </template>
 <script>
@@ -31,6 +29,14 @@ export default {
   },
   components: {
     Transactions
+  },
+  methods: {
+    onDelete() {
+      let res = getAccounts();
+      res.then(response => {
+        this.accounts = response;
+      });
+    }
   }
 };
 </script>
@@ -52,11 +58,12 @@ export default {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
-
+  margin-top: 20px;
 }
 .addButton {
   margin-top: 30px;
   margin-bottom: 30px;
   cursor: pointer;
+  margin-left:50px
 }
 </style>

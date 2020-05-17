@@ -7,6 +7,7 @@ import SignUp from "@/components/Users/signUp";
 import Accounts from "./components/Accounts/accounts";
 import addAccount from "./components/Accounts/addAccount";
 import addTransaction from "./components/Transactions/addTransaction";
+import editTransaction from "./components/Transactions/editTransaction";
 Vue.use(Router);
 export default new Router({
   routes: [
@@ -34,6 +35,12 @@ export default new Router({
       path: "/addTransaction",
       name: "addTransaction",
       component: addTransaction
+    },
+    {
+      path: "/editTransaction/:id",
+      name: "editTransaction",
+      component: editTransaction,
+      props:true
     },
 
     {

@@ -1,6 +1,6 @@
 <template>
-  <div class="addTransaction">
-    <h2>New Transaction</h2>
+  <div class="editTransaction">
+    <h2>Edit Transaction</h2>
     <div>
       <input type="radio" value="income" v-model="transactionType" />
       <label>Income</label>&nbsp;&nbsp;
@@ -14,16 +14,18 @@
     </select>
     <input v-model="amount" placeholder="amount" />
     <input v-model="date" placeholder="date" />
-    <button @click="addTransaction" style="cursor:pointer">Add transaction</button>
+    <button @click="editTransactions" style="cursor:pointer">Edit transaction</button>
   </div>
 </template>
 <script>
-import { getAccounts } from "../../services/accounts";
-import { addTransaction } from "../../services/transactions";
+import { getAccounts, getAccountNameById } from "../../services/accounts";
+import {
+  editTransaction,
+  getTransactionByTransactionId
+} from "../../services/transactions";
 export default {
-  name: "addTransaction",
+  name: "editTransaction",
   data() {
-    
     return {
       transactionType: "",
       accountName: "",
@@ -38,20 +40,37 @@ export default {
     res.then(response => {
       this.accounts = response;
     });
+    console.log(this.$route.params);
+    let resp = getTransactionByTransactionId(this.$route.params.id);
+    resp.then(response => {
+      {
+        console.log(response);
+        getAccountNameById(response.accountId).then(res => {
+          this.accountName = res;
+        });
+        (this.transactionType = response.transactionType),
+          (this.amount = response.amount),
+          (this.date = response.date),
+          (this.description = response.description);
+      }
+    });
   },
   methods: {
-    addTransaction() {
-      let res = addTransaction({
-        transactionType: this.transactionType,
-        accountName: this.accountName,
-        amount: this.amount,
-        date: this.date,
-        description: this.description
-      });
+    editTransactions() {
+      let res = editTransaction(
+        {
+          transactionType: this.transactionType,
+          accountName: this.accountName,
+          amount: this.amount,
+          date: this.date,
+          description: this.description
+        },
+        this.$route.params.id
+      );
       res.then(response => {
         if (response) {
-          this.$router.push("/accounts");
           alert("success");
+          this.$router.push("/accounts");
         } else alert("fail");
       });
     }
@@ -59,7 +78,7 @@ export default {
 };
 </script>
 <style scoped>
-.addTransaction {
+.editTransaction {
   display: flex;
   flex-direction: column;
   height: 300px;

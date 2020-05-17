@@ -21,6 +21,7 @@ export default {
       password: ""
     };
   },
+  
   methods: {
     submit() {
       let res = verifyUser(this.userName, this.password);

@@ -2,7 +2,6 @@ import axios from 'axios'
 export const getAccounts = async () => {
     try {
         let token=JSON.parse(localStorage.getItem("token"))
-        console.log(token)
         let response = await axios.get('http://localhost:8000/getAccountsByUserId',{
             headers: {
               Authorization:token
@@ -28,6 +27,17 @@ export const addAccount = async (accountName, accBalance) => {
         else {
             return true
         }
+    }
+    catch (err) {
+        return false
+    }
+
+}
+export const getAccountNameById = async (accId) => {
+
+    try {
+        let response = await axios.get('http://localhost:8000/getAccountNameById/'+accId)
+        return response.data.accountName
     }
     catch (err) {
         return false
